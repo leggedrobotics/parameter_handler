@@ -80,6 +80,14 @@ class ParameterValueTraits<ParameterValue<ValueType_>, typename std::enable_if<s
   }
 };
 
+template <>
+class ParameterValueTraits<ParameterValue<std::string>> {
+ public:
+  inline static void init(ParameterValue<std::string>& /*param*/) {}
+
+  inline static std::string setValue(ParameterValue<std::string>& /*param*/, const std::string& value) { return value; }
+};
+
 template <typename ValueType_>
 class ParameterValueTraits<ParameterValue<ValueType_>,
                            typename std::enable_if<std::is_base_of<Eigen::MatrixBase<ValueType_>, ValueType_>::value>::type> {
@@ -128,20 +136,13 @@ class ParameterValueTraits<ParameterValue<ValueType_>,
   }
 };
 
-// template<>
-// class ParameterValueTraits< ParameterValue<bool> > {
-// public:
-//  inline static void init(ParameterValue<bool>& param) {
-//    param.setValue(std::numeric_limits<bool>::min());
-//    param.setDefaultValue(std::numeric_limits<bool>::min());
-//    param.setMinValue(-std::numeric_limits<bool>::max());
-//    param.setMaxValue(std::numeric_limits<bool>::max());
-//  }
-//
-//  inline static bool setValue(ParameterValue<bool>& param, const bool& value) {
-//    return value;
-//  }
-//};
+template <>
+class ParameterValueTraits<ParameterValue<bool>> {
+ public:
+  inline static void init(ParameterValue<bool>& /*param*/) {}
+
+  inline static bool setValue(ParameterValue<bool>& /*param*/, const bool& value) { return value; }
+};
 
 } /* namespace internal */
 }  // namespace parameter_handler
